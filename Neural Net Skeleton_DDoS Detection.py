@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt 
-import talkey
+#import talkey
+#import win32.client
 #import pyshark
 
 #Data set prediction Model
@@ -11,7 +12,7 @@ data = [[0,0,0,1],
         [0,1,0,1],
         [1,0,1,0],
         [2,1,2,0],
-        [1,1,0,0],
+        [1,2,0,0],
         [2,2,1,0],
         [1,1,1,0]]
 
@@ -23,10 +24,10 @@ def sigmoid(x):
 #plt.axis([0,3,0,3])
 #plt.grid()
 
-#for i in range(len(data)):
- #   point = data[i]
- #   plt.plot([point[0], point[1]])
-  #  plt.grid()
+for i in range(len(data)):
+    point = data[i]
+    plt.plot([point[0], point[1]])
+    plt.grid()
 #training 
 
 w1 = np.random.randn()
@@ -58,7 +59,7 @@ for i in range(50000):
     dz_dw3 = point[2]
     dz_db  = 1
         
-        
+    #back propagation
     dcost_dw1 = dcost_dpred * dpred_dz * dz_dw1
     dcost_dw2 = dcost_dpred * dpred_dz * dz_dw2
     dcost_dw3 = dcost_dpred * dpred_dz * dz_dw3
@@ -81,17 +82,22 @@ for i in range(50000):
             cost_sum += np.square(pred - target)
         costs.append(cost_sum/len(data))
         
-sp = talkey.Talkey()
+     
+        
+#sp = win32.client.Dispatch("SAPI.SpVoice")
 
 
 def client(t, m, p):
     z = t * w1 + m *w2 +p * w3 +b
     pred = sigmoid(z)
     if pred < .5:
-        sp.say("It's an Attacker. Go hide. Proceeding counter measure.")
+        print(pred)
+        print("It's an Attacker. Go hide. Proceeding counter measure.")
+        
         
     else:
-        sp.say("It's Legit user")
+        print(pred)
+        print("It's Legit user")
 
 plt.plot(costs)
 plt.grid()
