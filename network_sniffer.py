@@ -3,6 +3,7 @@ import sys
 import struct
 import re
 
+
 def receiveData(s):
     data = ''
     try:
